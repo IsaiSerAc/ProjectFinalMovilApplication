@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "377236275906",
+    "project_id": "finalproject-bee4e",
+    "storage_bucket": "finalproject-bee4e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377236275906:android:684f4eba3ba0607654715b",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhFWWi5srrxKvdwhsJmtDY4BE8lMJnKYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
