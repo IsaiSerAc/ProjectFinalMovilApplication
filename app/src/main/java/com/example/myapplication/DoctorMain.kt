@@ -9,7 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 class DoctorMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        supportActionBar?.hide()
         setContentView(R.layout.activity_doctor_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

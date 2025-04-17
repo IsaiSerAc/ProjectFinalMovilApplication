@@ -18,6 +18,7 @@ class CheckDate : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_check_date)
 
         // Toolbar con botón atrás
