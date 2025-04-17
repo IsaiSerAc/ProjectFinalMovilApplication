@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- Fecha de emisión -->
+        <TextView
+            android:id="@+id/tvFechaReceta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="18/04/2025"
+            android:textColor="#1A1A1A"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Doctor que la emitió -->
+        <TextView
+            android:id="@+id/tvDoctorReceta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Dr. Ramírez"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <!-- Diagnóstico -->
+        <TextView
+            android:id="@+id/tvDiagnostico"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Diagnóstico: Angina leve"
+            android:textColor="#555555"
+            android:textSize="14sp" />
+
+        <!-- Medicamentos -->
+        <TextView
+            android:id="@+id/tvMedicamentos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Medicamentos: Aspirina, Nitroglicerina"
+            android:textColor="#555555"
+            android:textSize="14sp" />
+
+        <!-- Recomendaciones -->
+        <TextView
+            android:id="@+id/tvRecomendaciones"
+            android:layout_width="match_parent"
+            android:layout_height="29dp"
+            android:text="Recomendaciones: Evitar esfuerzo físico"
+            android:textColor="#555555"
+            android:textSize="14sp"
+            tools:layout_editor_absoluteX="12dp"
+            tools:layout_editor_absoluteY="1dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
