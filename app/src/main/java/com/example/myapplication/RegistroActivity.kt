@@ -20,7 +20,7 @@ class RegistroActivity : AppCompatActivity() {
     private lateinit var tvVolverLogin: TextView
 
     // Roles disponibles para el usuario
-    private val roles = arrayOf("Paciente", "Doctor", "Recepcionista")
+    private val roles = arrayOf("paciente", "doctor", "recepcionista")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- AppBar con botón atrás -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarRecipesDoctor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:title="Historial de Recetas"
+        android:titleTextColor="@color/white"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:layout_scrollFlags="scroll|enterAlways" />
+
+    <!-- Lista de recetas -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDoctorRecetas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

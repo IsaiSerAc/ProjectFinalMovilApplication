@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var tvRegistrar: TextView
 
-    private val roles = arrayOf("Paciente", "Doctor", "Recepcionista")
+    private val roles = arrayOf("paciente", "doctor", "recepcionista")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,9 +55,9 @@ class MainActivity : AppCompatActivity() {
                         .get()
                         .addOnSuccessListener { doc ->
                             when (doc.getString("rol")) {
-                                "Paciente" -> startActivity( Intent(this, PacientMain::class.java))
-                                "Doctor" -> startActivity(Intent(this, DoctorMain::class.java))
-                                "Recepcionista" -> startActivity(Intent(this, RecepcionistaMain::class.java))
+                                "paciente" -> startActivity( Intent(this, PacientMain::class.java))
+                                "doctor" -> startActivity(Intent(this, DoctorMain::class.java))
+                                "recepcionista" -> startActivity(Intent(this, RecepcionistaMain::class.java))
                                 else -> Toast.makeText(this, "Rol no reconocido", Toast.LENGTH_SHORT).show()
                             }
                         }
