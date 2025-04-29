@@ -12,8 +12,8 @@ class CitasAdapter(private val items: List<Cita>) :
 
     inner class CitaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvFechaHora: TextView = view.findViewById(R.id.tvFechaHora)
-        val tvDoctor: TextView   = view.findViewById(R.id.tvDoctor)
-        val tvMotivo: TextView   = view.findViewById(R.id.tvMotivo)
+        val tvDoctor: TextView    = view.findViewById(R.id.tvDoctor)
+        val tvMotivo: TextView    = view.findViewById(R.id.tvMotivo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CitaViewHolder {
@@ -24,9 +24,15 @@ class CitasAdapter(private val items: List<Cita>) :
 
     override fun onBindViewHolder(holder: CitaViewHolder, position: Int) {
         val cita = items[position]
+
         holder.tvFechaHora.text = "${cita.fecha}, ${cita.hora}"
-        holder.tvDoctor.text   = "Dr: ${cita.idDoctor}"
-        holder.tvMotivo.text   = "Motivo: ${cita.motivo}"
+
+        // Mostrar nombre del doctor o un texto genérico si no está disponible
+        val nombreDoctor = cita.nombreDoctor.takeIf { !it.isNullOrBlank() } ?: "Nombre no disponible"
+        holder.tvDoctor.text = "Doctor: $nombreDoctor"
+
+        // Mostrar motivo
+        holder.tvMotivo.text = "Motivo: ${cita.motivo}"
     }
 
     override fun getItemCount(): Int = items.size

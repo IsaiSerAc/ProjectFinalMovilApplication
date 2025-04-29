@@ -17,8 +17,9 @@ class DoctorRecipesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
+
         setContentView(R.layout.activity_doctor_recipes)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         rvDoctorRecetas = findViewById(R.id.rvDoctorRecetas)
         rvDoctorRecetas.layoutManager = LinearLayoutManager(this)

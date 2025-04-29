@@ -36,7 +36,7 @@ class DoctorAppointmentsAdapter(
 
         /* --- poblar texto --- */
         holder.tvFechaHora.text = "${c.fecha}, ${c.hora}"
-        holder.tvPaciente.text  = "Paciente: ${c.pacienteNombre}"
+        holder.tvPaciente.text  = "Paciente: ${c.nombrePaciente}"
         holder.tvMotivo.text    = "Motivo: ${c.motivo}"
         holder.tvEstado.text    = "Estado: ${c.estado.capitalize()}"
 

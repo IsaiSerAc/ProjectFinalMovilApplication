@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.firestore.Source
 
 class AtenderCita : AppCompatActivity() {
 
@@ -30,6 +30,8 @@ class AtenderCita : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
+
         setContentView(R.layout.activity_atender_cita)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -60,7 +62,7 @@ class AtenderCita : AppCompatActivity() {
     private fun cargarDatosCita() {
         firestore.collection("Citas")
             .document(citaId!!)
-            .get()
+            .get(Source.SERVER)
             .addOnSuccessListener { doc ->
                 if (!doc.exists()) {
                     Toast.makeText(this, "Cita no encontrada", Toast.LENGTH_SHORT).show()
@@ -74,6 +76,7 @@ class AtenderCita : AppCompatActivity() {
                 idPaciente = doc.getString("idPaciente")
                 val nombrePac = doc.getString("pacienteNombre") ?: "Paciente"
                 tvPaciente.text = "Paciente: $nombrePac"
+
 
                 val motivo = doc.getString("motivo") ?: ""
                 tvMotivo.text = "Motivo: $motivo"
@@ -94,35 +97,51 @@ class AtenderCita : AppCompatActivity() {
             return
         }
 
-        // Preparar lista de medicamentos
         val medsList = meds.split(",").map { it.trim() }
 
-        // Datos de la receta
-        val receta = hashMapOf(
-            "idCita"          to citaId,
-            "idDoctor"        to auth.currentUser!!.uid,
-            "idPaciente"      to idPaciente,
-            "fecha"           to SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
-            "diagnostico"     to diag,
-            "medicamentos"    to medsList,
-            "recomendaciones" to recs
-        )
+        val uidDoctor = auth.currentUser!!.uid
 
-        // Guardar receta y actualizar estado de la cita
-        firestore.collection("Recetas")
-            .add(receta)
-            .addOnSuccessListener {
-                firestore.collection("Citas")
-                    .document(citaId!!)
-                    .update("estado", "atendida")
+        // Obtener nombre del doctor desde Firestore
+        firestore.collection("Usuarios")
+            .document(uidDoctor)
+            .get()
+            .addOnSuccessListener { docDoctor ->
+                val nombreDoctor = docDoctor.getString("nombre") ?: "Doctor"
 
-                Toast.makeText(this, "Receta generada correctamente", Toast.LENGTH_SHORT).show()
-                finish()
+                val nombrePaciente = tvPaciente.text.toString().removePrefix("Paciente: ").trim()
+
+                val receta = hashMapOf(
+                    "idCita"          to citaId,
+                    "idDoctor"        to uidDoctor,
+                    "nombreDoctor"    to nombreDoctor,     // ← ahora sí el real
+                    "idPaciente"      to idPaciente,
+                    "nombrePaciente"  to nombrePaciente,
+                    "fecha"           to SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()),
+                    "diagnostico"     to diag,
+                    "medicamentos"    to medsList,
+                    "recomendaciones" to recs
+                )
+
+                firestore.collection("Recetas")
+                    .add(receta)
+                    .addOnSuccessListener {
+                        firestore.collection("Citas")
+                            .document(citaId!!)
+                            .update("estado", "atendida")
+
+                        Toast.makeText(this, "Receta generada correctamente", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Error al generar receta: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error al generar receta: ${it.message}", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al obtener nombre del doctor: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         finish()

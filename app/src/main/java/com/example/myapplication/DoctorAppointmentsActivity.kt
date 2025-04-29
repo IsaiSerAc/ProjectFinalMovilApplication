@@ -21,8 +21,9 @@ class DoctorAppointmentsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
+
         setContentView(R.layout.activity_doctor_appointments)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         /* ---------- Firebase ---------- */
         auth = FirebaseAuth.getInstance()
@@ -92,7 +93,7 @@ class DoctorAppointmentsActivity : AppCompatActivity() {
                     val cita = doc.toObject(Cita::class.java)
                         ?.copy(
                             id = doc.id,
-                            pacienteNombre = doc.getString("pacienteNombre") ?: "Paciente"
+                            nombrePaciente = doc.getString("pacienteNombre") ?: ""
                         )
                     cita?.let { listaCitas.add(it) }
                 }

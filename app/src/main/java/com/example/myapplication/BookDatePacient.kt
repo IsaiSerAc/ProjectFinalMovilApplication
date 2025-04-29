@@ -72,38 +72,51 @@ class BookDatePacient : AppCompatActivity() {
             ).show()
         }
 
-        // Confirmar cita
         btnConfirmar.setOnClickListener {
             val nombreDoc = spinnerDoc.selectedItem as? String ?: ""
             val idDoctor  = doctoresMap[nombreDoc] ?: ""
             val fecha     = selectedFechaIso
             val horaSel   = spinnerHora.selectedItem as? String ?: ""
             val motivo    = etMotivo.text.toString().trim()
+            val uidPaciente = auth.currentUser!!.uid
 
             if (idDoctor.isBlank() || fecha.isBlank() || horaSel.isBlank() || motivo.isBlank()) {
                 Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val nuevaCita = mapOf(
-                "idDoctor"   to idDoctor,
-                "idPaciente" to auth.currentUser!!.uid,
-                "fecha"      to fecha,
-                "hora"       to horaSel,
-                "motivo"     to motivo,
-                "estado"     to "pendiente"
-            )
+            // Leer el nombre del paciente desde Firestore
+            firestore.collection("Usuarios")
+                .document(uidPaciente)
+                .get()
+                .addOnSuccessListener { doc ->
+                    val nombrePaciente = doc.getString("nombre") ?: "Paciente"
 
-            firestore.collection("Citas")
-                .add(nuevaCita)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Cita agendada correctamente", Toast.LENGTH_SHORT).show()
-                    finish()
+                    val nuevaCita = mapOf(
+                        "idDoctor"       to idDoctor,
+                        "idPaciente"     to uidPaciente,
+                        "pacienteNombre" to nombrePaciente, // ← AGREGADO CORRECTAMENTE
+                        "fecha"          to fecha,
+                        "hora"           to horaSel,
+                        "motivo"         to motivo,
+                        "estado"         to "pendiente"
+                    )
+
+                    firestore.collection("Citas")
+                        .add(nuevaCita)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Cita agendada correctamente", Toast.LENGTH_SHORT).show()
+                            finish()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Error al agendar: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error al agendar: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error al obtener nombre: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
+
     }
 
     private fun cargarDoctores() {

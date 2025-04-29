@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class CheckDate : AppCompatActivity() {
 
     private lateinit var rvCitas: RecyclerView
+    private lateinit var citasAdapter: CitasAdapter  // ← Agregamos el adapter aquí
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
@@ -26,7 +27,9 @@ class CheckDate : AppCompatActivity() {
 
         rvCitas = findViewById(R.id.rvCitas)
         rvCitas.layoutManager = LinearLayoutManager(this)
-        rvCitas.adapter = CitasAdapter(listaCitas)
+
+        citasAdapter = CitasAdapter(listaCitas) // ← Inicializamos el adapter
+        rvCitas.adapter = citasAdapter          // ← Asignamos el adapter al RecyclerView
 
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
@@ -45,17 +48,26 @@ class CheckDate : AppCompatActivity() {
             .addOnSuccessListener { snap ->
                 listaCitas.clear()
                 for (doc in snap.documents) {
-                    val cita = doc.toObject(Cita::class.java)?.copy(id = doc.id)
-                    cita?.let { listaCitas.add(it) }
+                    val cita = doc.toObject(Cita::class.java)
+                    if (cita != null) {
+                        firestore.collection("Usuarios")
+                            .document(cita.idDoctor)
+                            .get()
+                            .addOnSuccessListener { docDoctor ->
+                                val nombreDoctor = docDoctor.getString("nombre") ?: "Doctor"
+                                val citaConNombre = cita.copy(nombreDoctor = nombreDoctor)
+                                listaCitas.add(citaConNombre)
+                                citasAdapter.notifyDataSetChanged() // ← Ahora sí correcto
+                            }
+                            .addOnFailureListener {
+                                listaCitas.add(cita)
+                                citasAdapter.notifyDataSetChanged() // ← Correcto también aquí
+                            }
+                    }
                 }
-                rvCitas.adapter?.notifyDataSetChanged()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error al cargar citas: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
-    // Navegar atrás con el botón del toolbar
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
