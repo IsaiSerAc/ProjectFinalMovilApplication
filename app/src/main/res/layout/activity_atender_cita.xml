@@ -7,19 +7,12 @@
     >
 
     <!-- AppBar con back -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarAtender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:title="Atender Cita"
-        android:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:layout_scrollFlags="scroll|enterAlways" />
 
     <!-- Contenido desplazable -->
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="669dp"
         android:padding="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -29,13 +22,22 @@
             android:orientation="vertical">
 
             <!-- Detalle cita -->
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Atendiendo cita"
+                android:textAlignment="center"
+                android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/tvFechaHoraDetalle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Fecha: --/--/----, Hora: --:--"
-                android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvPacienteDetalle"
@@ -43,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Paciente: —"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tvMotivoDetalle"
@@ -64,7 +66,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDiagnostico"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -77,7 +79,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etMedicamentos"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -90,7 +92,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRecomendaciones"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
@@ -100,8 +102,9 @@
                 android:layout_marginTop="24dp"
                 android:text="Generar Receta"
                 android:textAllCaps="false"
-                app:cornerRadius="16dp"/>
+                app:cornerRadius="16dp" />
 
         </LinearLayout>
     </ScrollView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,23 +6,11 @@
     android:layout_height="match_parent"
     android:background="#F3F6F9">
 
-    <!-- AppBar con título y botón atrás -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:background="#2196F3"
-        android:title="Mis Citas"
-        android:titleTextColor="#FFFFFF"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:layout_scrollFlags="scroll|enterAlways" />
-
     <!-- Lista de citas -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCitas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:padding="16dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

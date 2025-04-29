@@ -9,23 +9,19 @@
     android:background="#F3F6F9"
     tools:context=".SeeRecipePacient">
 
-    <!-- AppBar con botón atrás -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarRecipes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#2196F3"
-        android:title="Mis Recetas"
-        android:titleTextColor="#FFFFFF"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:layout_scrollFlags="scroll|enterAlways" />
 
     <!-- RecyclerView de recetas -->
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mis recetas"
+        android:textAlignment="center"
+        android:textSize="24sp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecetas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
+        android:padding="16dp"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

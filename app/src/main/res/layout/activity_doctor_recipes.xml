@@ -6,22 +6,19 @@
     android:layout_height="match_parent"
     >
 
-    <!-- AppBar con botón atrás -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarRecipesDoctor"
+    <!-- Lista de recetas -->
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="Historial de Recetas"
-        android:titleTextColor="@color/white"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:layout_scrollFlags="scroll|enterAlways" />
+        android:text="Historial de recetas"
+        android:textAlignment="center"
+        android:textSize="24sp" />
 
-    <!-- Lista de recetas -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDoctorRecetas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:padding="16dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

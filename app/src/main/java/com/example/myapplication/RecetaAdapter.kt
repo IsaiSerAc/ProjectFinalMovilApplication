@@ -27,7 +27,7 @@ class RecetasAdapter(private val items: List<Receta>) :
     override fun onBindViewHolder(holder: RecetaViewHolder, position: Int) {
         val r = items[position]
         holder.tvFecha.text           = r.fecha
-        holder.tvDoctor.text          = "Dr. ${r.idDoctor}"
+        holder.tvDoctor.text          = "Dr. ${r.nombreDoctor}"
         holder.tvDiagnostico.text     = "Diagnóstico: ${r.diagnostico}"
         holder.tvMedicamentos.text    = "Medicamentos: ${r.medicamentos.joinToString(", ")}"
         holder.tvRecomendaciones.text = "Recomendaciones: ${r.recomendaciones}"

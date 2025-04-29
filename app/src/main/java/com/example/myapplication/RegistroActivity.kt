@@ -20,7 +20,7 @@ class RegistroActivity : AppCompatActivity() {
     private lateinit var tvVolverLogin: TextView
 
     // Roles disponibles para el usuario
-    private val roles = arrayOf("paciente", "doctor", "recepcionista")
+    private val roles = arrayOf("Selecciona tu rol", "paciente", "doctor", "recepcionista")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +49,8 @@ class RegistroActivity : AppCompatActivity() {
             val password = etPassword.text.toString().trim()
             val rol = spinnerRol.selectedItem.toString()
 
-            if (nombre.isEmpty() || email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+            if (nombre.isEmpty() || email.isEmpty() || password.isEmpty() || rol == "Selecciona tu rol") {
+                Toast.makeText(this, "Completa todos los campos y selecciona un rol válido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

@@ -8,23 +8,19 @@
     android:layout_height="match_parent"
     android:background="#F3F6F9">
 
-    <!-- AppBar -->
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarAppointments"
+    <!-- RecyclerView -->
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#2196F3"
-        android:title="Mis Citas"
-        android:titleTextColor="#FFFFFF"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:layout_scrollFlags="scroll|enterAlways" />
+        android:text="MIs citas"
+        android:textAlignment="center"
+        android:textSize="24sp" />
 
-    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAppointments"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_height="627dp"
+        android:padding="16dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -71,15 +71,26 @@ class AgendaCitaRecep : AppCompatActivity() {
                     val name = doc.getString("nombre") ?: continue
                     doctors.add(Pair(id, name))
                 }
-                val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, doctors.map { it.second })
+
+                val doctorNames = mutableListOf("Seleccione un doctor") // ← aquí agregas el "hint"
+                doctorNames.addAll(doctors.map { it.second })
+
+                val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, doctorNames)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerDoctor.adapter = adapter
                 spinnerDoctor.setSelection(0)
+
                 spinnerDoctor.setOnItemSelectedListener { position ->
-                    selectedDoctorId = doctors[position].first
-                    suggestHour()
+                    if (position == 0) {
+                        selectedDoctorId = ""  // ← no hay doctor seleccionado todavía
+                    } else {
+                        selectedDoctorId = doctors[position - 1].first
+                        suggestHour()
+                    }
                 }
             }
     }
+
 
     private fun loadPatients() {
         firestore.collection("Usuarios")
@@ -92,30 +103,40 @@ class AgendaCitaRecep : AppCompatActivity() {
                     val name = doc.getString("nombre") ?: "Paciente sin nombre"
                     patients.add(Pair(id, name))
                 }
+
                 if (patients.isEmpty()) {
                     Toast.makeText(this, "No hay pacientes registrados", Toast.LENGTH_SHORT).show()
                 }
+
+                val patientNames = mutableListOf("Seleccione el paciente") // ← hint agregado
+                patientNames.addAll(patients.map { it.second })
+
                 val adapter = ArrayAdapter(
                     this,
                     android.R.layout.simple_spinner_item,
-                    patients.map { it.second }
+                    patientNames
                 )
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerPatient.adapter = adapter
 
                 if (patients.isNotEmpty()) {
-                    spinnerPatient.setSelection(0)
-                    selectedPatientId = patients[0].first
+                    spinnerPatient.setSelection(0) // ← ahora selecciona el hint
+                    selectedPatientId = "" // ← porque no ha seleccionado un paciente todavía
                 }
 
                 spinnerPatient.setOnItemSelectedListener { position ->
-                    selectedPatientId = patients[position].first
+                    if (position == 0) {
+                        selectedPatientId = "" // ← hint seleccionado, no paciente real
+                    } else {
+                        selectedPatientId = patients[position - 1].first
+                    }
                 }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error al cargar pacientes", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     private fun suggestHour() {
         if (selectedDoctorId == null) return

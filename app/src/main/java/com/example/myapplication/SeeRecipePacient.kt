@@ -21,8 +21,6 @@ class SeeRecipePacient : AppCompatActivity() {
 
         setContentView(R.layout.activity_see_recipe_pacient)
 
-        // Toolbar con back
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         rvRecetas = findViewById(R.id.rvRecetas)
         rvRecetas.layoutManager = LinearLayoutManager(this)
@@ -38,7 +36,6 @@ class SeeRecipePacient : AppCompatActivity() {
             return
         }
 
-        // Cargar recetas del paciente
         firestore.collection("Recetas")
             .whereEqualTo("idPaciente", uid)
             .get()
@@ -53,6 +50,7 @@ class SeeRecipePacient : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error al cargar recetas: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -87,23 +87,31 @@ class RecepcionistaMain : AppCompatActivity() {
                     doctorIds.add(doc.id)
                 }
 
+                val namesWithHint = mutableListOf("Seleccione un doctor")
+                namesWithHint.addAll(doctorNames)
+
                 val adapterSpinner = ArrayAdapter(
                     this,
                     android.R.layout.simple_spinner_item,
-                    doctorNames
+                    namesWithHint
                 )
                 adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerDoctors.adapter = adapterSpinner
 
                 spinnerDoctors.setOnItemSelectedListener { position ->
-                    selectedDoctorId = doctorIds[position]
-                    loadAppointments()
+                    if (position == 0) {
+                        selectedDoctorId = "" // hint seleccionado, no doctor real
+                    } else {
+                        selectedDoctorId = doctorIds[position - 1] // ajustar índice
+                        loadAppointments()
+                    }
                 }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error al cargar doctores", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     private fun loadAppointments() {
         if (selectedDoctorId == null) return

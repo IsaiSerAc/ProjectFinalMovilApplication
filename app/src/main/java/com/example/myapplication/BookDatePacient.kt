@@ -127,23 +127,35 @@ class BookDatePacient : AppCompatActivity() {
                 val nombres = snap.documents.mapNotNull { it.getString("nombre") }
                 doctoresMap.clear()
                 nombres.forEach { name ->
-                    doctoresMap[name] = snap.documents.first { it.getString("nombre")==name }.id
+                    doctoresMap[name] = snap.documents.first { it.getString("nombre") == name }.id
                 }
-                spinnerDoc.adapter = ArrayAdapter(this,
+
+                val nombresConHint = if (nombres.isEmpty()) {
+                    listOf("No hay doctores disponibles")
+                } else {
+                    listOf("Seleccione un doctor") + nombres
+                }
+
+                spinnerDoc.adapter = ArrayAdapter(
+                    this,
                     android.R.layout.simple_spinner_item,
-                    if (nombres.isEmpty()) listOf("No hay doctores disponibles") else nombres
+                    nombresConHint
                 ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
+
+                // Aquí NO tocamos el onItemSelectedListener original
+                // Sigue funcionando tal como lo tienes
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Error cargando doctores: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
 
+
     @SuppressLint("NewApi")
     private fun recargarSlots() {
         val nombreDoc = spinnerDoc.selectedItem as? String ?: return
-        val doctorId  = doctoresMap[nombreDoc] ?: return
-        val fechaIso  = selectedFechaIso.ifBlank { return }
+        val doctorId = doctoresMap[nombreDoc] ?: return
+        val fechaIso = selectedFechaIso.ifBlank { return }
 
         firestore.collection("horarios").document(doctorId).get()
             .addOnSuccessListener { doc ->
@@ -168,9 +180,17 @@ class BookDatePacient : AppCompatActivity() {
                     .addOnSuccessListener { snap ->
                         val ocup = snap.documents.mapNotNull { it.getString("hora") }
                         val libres = allSlots.filterNot { it in ocup }
-                        spinnerHora.adapter = ArrayAdapter(this,
+
+                        val slotsConHint = if (libres.isEmpty()) {
+                            listOf("No hay horarios disponibles")
+                        } else {
+                            listOf("Selecciona un horario") + libres
+                        }
+
+                        spinnerHora.adapter = ArrayAdapter(
+                            this,
                             android.R.layout.simple_spinner_item,
-                            libres
+                            slotsConHint
                         ).also { it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item) }
                     }
             }
@@ -178,6 +198,7 @@ class BookDatePacient : AppCompatActivity() {
                 Toast.makeText(this, "Error al cargar disponibilidad: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     @SuppressLint("NewApi")
     private fun dayKeyFromFecha(fecha: String): String {

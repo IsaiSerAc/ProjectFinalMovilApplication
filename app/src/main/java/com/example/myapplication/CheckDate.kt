@@ -22,9 +22,6 @@ class CheckDate : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_check_date)
 
-        // Toolbar con botón atrás
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         rvCitas = findViewById(R.id.rvCitas)
         rvCitas.layoutManager = LinearLayoutManager(this)
 
